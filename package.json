@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "description": "A collection of Node-RED nodes for mlkcca.com.",
   "dependencies": {
-    "milkcocoa": "0.3.1"
+    "milkcocoa": "0.4.1"
   },
   "repository": {
     "type": "git",
