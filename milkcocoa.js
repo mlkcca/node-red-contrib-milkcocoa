@@ -70,6 +70,11 @@ module.exports = function (RED) {
       var node = this;
       var milkcocoa;
       var credentials = RED.nodes.getCredentials(this.milkcocoa);
+      if (credentials.apiKey && credentials.apiSecret) {
+        milkcocoa = MilkCocoa.connectWithApiKey(credentials.appId + '.mlkcca.com', credentials.apiKey, credentials.apiSecret);
+      } else {
+        milkcocoa = new MilkCocoa(credentials.appId + '.mlkcca.com');
+      }
       this.on('input', function (msg) {
         node.sendMsg = function (err, result) {
           if (err) {
@@ -81,11 +86,6 @@ module.exports = function (RED) {
           msg.payload = result;
           node.send(msg);
         };
-        if (credentials.apiKey && credentials.apiSecret) {
-          milkcocoa = MilkCocoa.connectWithApiKey(credentials.appId + '.mlkcca.com', credentials.apiKey, credentials.apiSecret);
-        } else {
-          milkcocoa = new MilkCocoa(credentials.appId + '.mlkcca.com');
-        }
         var targetId = msg.targetId || node.targetId;
         var ds = milkcocoa.dataStore(node.dataStore);
         var payload = typeof msg.payload === 'string' ? JSON.parse(msg.payload) : msg.payload;
