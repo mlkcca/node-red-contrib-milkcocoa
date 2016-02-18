@@ -53,6 +53,7 @@ module.exports = function (RED) {
       });
       this.on('close', function() {
         ds.off(node.operation);
+        milkcocoa.disconnect();
       });
     }
   }
@@ -103,6 +104,9 @@ module.exports = function (RED) {
             return ds.remove(targetId, node.sendMsg);
             break;
         };
+      });
+      this.on('close', function() {
+        milkcocoa.disconnect();
       });
     }
   }
