@@ -47,15 +47,13 @@ module.exports = function (RED) {
       }
       var ds = milkcocoa.dataStore(node.dataStore);
 
-      var onClosedListener = function () {
+      milkcocoa.onClosed(function () {
         ds.off(node.operation);
         setTimeout(function () {
           milkcocoa.connect();
           ds.on(node.operation, onMessageListener);
         }, 5000);
-      };
-
-      milkcocoa.onClosed(onClosedListener);
+      });
       ds.on(node.operation, onMessageListener);
 
       function onMessageListener (res) {
@@ -65,7 +63,7 @@ module.exports = function (RED) {
       }
 
       this.on('close', function() {
-        onClosedListener = function () {};
+        milkcocoa.onClosed(function () {});
         ds.off(node.operation);
         milkcocoa.disconnect();
       });
