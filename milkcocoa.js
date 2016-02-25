@@ -46,12 +46,24 @@ module.exports = function (RED) {
         milkcocoa = new MilkCocoa(credentials.appId + '.mlkcca.com');
       }
       var ds = milkcocoa.dataStore(node.dataStore);
-      ds.on(node.operation, function (res) {
+
+      milkcocoa.onClosed(function () {
+        ds.off(node.operation);
+        setTimeout(function () {
+          milkcocoa.connect();
+          ds.on(node.operation, onMessageListener);
+        }, 5000);
+      });
+      ds.on(node.operation, onMessageListener);
+
+      function onMessageListener (res) {
         var msg = {};
         msg.payload = res;
         node.send(msg);
-      });
+      }
+
       this.on('close', function() {
+        milkcocoa.onClosed(function () {});
         ds.off(node.operation);
         milkcocoa.disconnect();
       });
