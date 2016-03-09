@@ -47,6 +47,12 @@ module.exports = function (RED) {
       }
       var ds = milkcocoa.dataStore(node.dataStore);
 
+      var onMessageListener = function (res) {
+        var msg = {};
+        msg.payload = res;
+        node.send(msg);
+      };
+
       milkcocoa.onClosed(function () {
         ds.off(node.operation);
         setTimeout(function () {
@@ -55,12 +61,6 @@ module.exports = function (RED) {
         }, 5000);
       });
       ds.on(node.operation, onMessageListener);
-
-      function onMessageListener (res) {
-        var msg = {};
-        msg.payload = res;
-        node.send(msg);
-      }
 
       this.on('close', function() {
         milkcocoa.onClosed(function () {});
