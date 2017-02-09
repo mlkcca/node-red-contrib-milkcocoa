@@ -46,24 +46,12 @@ module.exports = function (RED) {
         milkcocoa = new MilkCocoa(credentials.appId + '.mlkcca.com');
       }
       var ds = milkcocoa.dataStore(node.dataStore);
-
-      var onMessageListener = function (res) {
+      ds.on(node.operation, function (res) {
         var msg = {};
         msg.payload = res;
         node.send(msg);
-      };
-
-      milkcocoa.onClosed(function () {
-        ds.off(node.operation);
-        setTimeout(function () {
-          milkcocoa.connect();
-          ds.on(node.operation, onMessageListener);
-        }, 5000);
       });
-      ds.on(node.operation, onMessageListener);
-
       this.on('close', function() {
-        milkcocoa.onClosed(function () {});
         ds.off(node.operation);
         milkcocoa.disconnect();
       });
