@@ -16,35 +16,33 @@
 
 module.exports = function (RED) {
   'use strict';
-  var MilkCocoa = require('milkcocoa');
+  var MilkCocoa = require('mlkcca');
 
   function MilkcocoaNode (n) {
     RED.nodes.createNode(this, n);
   }
 
-  RED.nodes.registerType('milkcocoa', MilkcocoaNode, {
+  RED.nodes.registerType('mlkcca', MilkcocoaNode, {
     credentials: {
       appId: { type: 'text' },
-      apiKey: { type: 'text' },
-      apiSecret: { type: 'password' }
+      apiKey: { type: 'password' }
     }
   });
 
   function MilkcocaInNode (n) {
     RED.nodes.createNode(this, n);
-    this.milkcocoa = n.milkcocoa;
+    this.milkcocoa = n.mlkcca;
     this.dataStore = n.dataStore;
     this.operation = n.operation;
     this.milkcocoaConfig = RED.nodes.getNode(this.milkcocoa);
     if (this.milkcocoaConfig) {
-      var node = this;
-      var milkcocoa;
       var credentials = RED.nodes.getCredentials(this.milkcocoa);
-      if (credentials.apiKey && credentials.apiSecret) {
-        milkcocoa = MilkCocoa.connectWithApiKey(credentials.appId + '.mlkcca.com', credentials.apiKey, credentials.apiSecret);
-      } else {
-        milkcocoa = new MilkCocoa(credentials.appId + '.mlkcca.com');
-      }
+      var node = this;
+      var milkcocoa = new MilkCocoa({
+        appId: credentials.appId || 'demo',
+        apiKey: credentials.apiKey || 'demo'
+      });
+
       var ds = milkcocoa.dataStore(node.dataStore);
       ds.on(node.operation, function (res) {
         var msg = {};
@@ -58,24 +56,23 @@ module.exports = function (RED) {
     }
   }
 
-  RED.nodes.registerType("milkcocoa in", MilkcocaInNode);
+  RED.nodes.registerType("mlkcca in", MilkcocaInNode);
 
   function MilkcocaOutNode (n) {
     RED.nodes.createNode(this, n);
-    this.milkcocoa = n.milkcocoa;
+    this.milkcocoa = n.mlkcca;
     this.dataStore = n.dataStore;
     this.operation = n.operation;
     this.targetId = n.targetId;
     this.milkcocoaConfig = RED.nodes.getNode(this.milkcocoa);
     if (this.milkcocoaConfig) {
-      var node = this;
-      var milkcocoa;
       var credentials = RED.nodes.getCredentials(this.milkcocoa);
-      if (credentials.apiKey && credentials.apiSecret) {
-        milkcocoa = MilkCocoa.connectWithApiKey(credentials.appId + '.mlkcca.com', credentials.apiKey, credentials.apiSecret);
-      } else {
-        milkcocoa = new MilkCocoa(credentials.appId + '.mlkcca.com');
-      }
+      var node = this;
+      var milkcocoa = new MilkCocoa({
+        appId: credentials.appId || 'demo',
+        apiKey: credentials.apiKey || 'demo'
+      });
+
       this.on('input', function (msg) {
         node.sendMsg = function (err, result) {
           if (err) {
@@ -100,9 +97,6 @@ module.exports = function (RED) {
           case 'set':
             return ds.set(targetId, payload, node.sendMsg);
             break;
-          case 'remove':
-            return ds.remove(targetId, node.sendMsg);
-            break;
         };
       });
       this.on('close', function() {
@@ -111,5 +105,5 @@ module.exports = function (RED) {
     }
   }
 
-  RED.nodes.registerType("milkcocoa out", MilkcocaOutNode);
+  RED.nodes.registerType("mlkcca out", MilkcocaOutNode);
 }

@@ -14,32 +14,28 @@
   limitations under the License.
 -->
 
-<script type="text/x-red" data-template-name="milkcocoa">
+<script type="text/x-red" data-template-name="mlkcca">
   <div class="form-row">
     <label for="node-config-input-appId"><i class="fa fa-bookmark"></i> App ID</label>
-    <input type="text" id="node-config-input-appId" />
+    <input type="text" id="node-config-input-appId" placeholder="demo" />
   </div>
   <div class="form-row">
     <label for="node-config-input-apiKey"><i class="fa fa-bookmark"></i> API Key</label>
-    <input type="text" id="node-config-input-apiKey" />
-  </div>
-  <div class="form-row">
-    <label for="node-config-input-apiSecret"><i class="fa fa-lock"></i> API Secret</label>
-    <input type="password" id="node-config-input-apiSecret">
+    <input type="text" id="node-config-input-apiKey" placeholder="demo"/>
   </div>
 </script>
 
 <script type="text/javascript">
-  RED.nodes.registerType('milkcocoa', {
+  RED.nodes.registerType('mlkcca', {
     category: 'config',
     color: '#dfd9cf',
     defaults: {
-      appId: { value: '', required: true }
+      appId: { value: 'demo', required: true },
+      apiKey: { value: 'demo', required: true }
     },
     credentials: {
-      appId: { type: 'text', required: true },
-      apiKey: { type: 'text' },
-      apiSecret: { type: 'password' }
+      appId: { type: 'text', default: "demo", required: true },
+      apiKey: { type: 'password', required: true },
     },
     label: function () {
       return this.appId;
@@ -47,14 +43,14 @@
   });
 </script>
 
-<script type="text/x-red" data-template-name="milkcocoa in">
+<script type="text/x-red" data-template-name="mlkcca in">
   <div class="form-row">
-    <label for="node-input-milkcocoa"><i class="fa fa-user"></i> Log in as</label>
-    <input type="text" id="node-input-milkcocoa">
+    <label for="node-input-mlkcca"><i class="fa fa-user"></i> Log in as</label>
+    <input type="text" id="node-input-mlkcca">
   </div>
   <div class="form-row">
     <label for="node-input-dataStore"><i class="fa fa-database"></i> Data Store</label>
-    <input type="text" id="node-input-dataStore">
+    <input type="text" id="node-input-dataStore" value="demo">
   </div>
   <div class="form-row">
     <label for="node-input-operation"><i class="fa fa-wrench"></i> Operation</label>
@@ -62,7 +58,6 @@
       <option value="push">Push</option>
       <option value="send">Send</option>
       <option value="set">Set</option>
-      <option value="remove">Remove</option>
     </select>
   </div>
   <div class="form-row">
@@ -72,12 +67,12 @@
 </script>
 
 <script type="text/javascript">
-  RED.nodes.registerType('milkcocoa in', {
+  RED.nodes.registerType('mlkcca in', {
     category: 'input',
     color: '#dfd9cf',
     defaults: {
-      milkcocoa: { type: 'milkcocoa', required: true },
-      dataStore: { value: '', required: true },
+      mlkcca: { type: 'mlkcca', required: true },
+      dataStore: { value: 'node-red', required: true },
       operation: { value: 'push' },
       name: { value: '' }
     },
@@ -92,10 +87,10 @@
   });
 </script>
 
-<script type="text/x-red" data-template-name="milkcocoa out">
+<script type="text/x-red" data-template-name="mlkcca out">
   <div class="form-row">
-    <label for="node-input-milkcocoa"><i class="fa fa-user"></i> Log in as</label>
-    <input type="text" id="node-input-milkcocoa">
+    <label for="node-input-mlkcca"><i class="fa fa-user"></i> Log in as</label>
+    <input type="text" id="node-input-mlkcca">
   </div>
   <div class="form-row">
     <label for="node-input-dataStore"><i class="fa fa-database"></i> Data Store</label>
@@ -107,7 +102,6 @@
       <option value="push">Push</option>
       <option value="send">Send</option>
       <option value="set">Set</option>
-      <option value="remove">Remove</option>
     </select>
   </div>
   <div class="form-row input-targetId-row hidden">
@@ -121,12 +115,12 @@
 </script>
 
 <script type="text/javascript">
-  RED.nodes.registerType('milkcocoa out', {
+  RED.nodes.registerType('mlkcca out', {
     category: 'output',
     color: '#dfd9cf',
     defaults: {
-      milkcocoa: { type: 'milkcocoa', required: true },
-      dataStore: { value: '', required: true },
+      mlkcca: { type: 'mlkcca', required: true },
+      dataStore: { value: 'node-red', required: true },
       operation: { value: 'push' },
       targetId: { value: '' },
       name: { value: '' }
