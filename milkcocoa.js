@@ -97,6 +97,9 @@ module.exports = function (RED) {
           case 'set':
             return ds.set(targetId, payload, node.sendMsg);
             break;
+          case 'history':
+            return ds.history(payload, node.sendMsg);
+            break;
         };
       });
       this.on('close', function() {

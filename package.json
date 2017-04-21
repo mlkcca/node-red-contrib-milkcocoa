@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joeartsea/node-red-contrib-milkcocoa"
+    "url": "https://github.com/mlkcca/node-red-contrib-mlkcca"
   },
   "license": "Apache",
   "keywords": [
@@ -27,6 +27,10 @@
     {
       "name": "joeartsea",
       "email": "artsnet111@gmail.com"
+    },
+    {
+      "name": "Shuhei Hiya",
+      "email": "syuhei176@gmail.com"
     }
   ]
 }
