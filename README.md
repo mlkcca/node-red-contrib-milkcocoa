@@ -1,6 +1,6 @@
 node-red-contrib-mlkcca
 ========================
-A collection of <a href="http://nodered.org" target="_new">Node-RED</a> nodes for <a href="https://mlkcca.com/" target="_new">Milkcocoa</a>.
+A collection of <a href="http://nodered.org" target="_new">Node-RED</a> nodes for Milkcocoa 2017 version.
 
 
 Install
@@ -13,11 +13,11 @@ Run the following command in the root directory of your Node-RED install
 Acknowledgements
 ----------------
 
-The node-red-contrib-milkcocoa uses the following open source software:
+The node-red-contrib-mlkcca uses the following open source software:
 
-- [milkcocoa] (https://www.npmjs.com/package/milkcocoa): milkcocoa client for Node.js.
+- [mlkcca] (https://github.com/mlkcca/js): milkcocoa client for Node.js.
 
 License
 -------
 
-See [license] (https://github.com/joeartsea/node-red-contrib-milkcocoa/blob/master/LICENSE) (Apache License Version 2.0).
+See [license] (https://github.com/mlkcca/node-red-contrib-mlkcca/blob/master/LICENSE) (Apache License Version 2.0).
